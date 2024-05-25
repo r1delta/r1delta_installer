@@ -1,0 +1,8 @@
+;!@Install@!UTF-8!
+InstallPath="%TEMP%\\r1delta_installer"
+Title="R1Delta Installer"
+Progress="no"
+GUIMode="2"
+SelfDelete="1"
+RunProgram="r1delta_installer.exe"
+;!@InstallEnd@!

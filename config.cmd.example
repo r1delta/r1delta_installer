@@ -1,0 +1,10 @@
+REM **************** R1DELTA CONFIG FILE ****************
+REM Modify this file with the paths of the dependencies.
+REM The readme.md contains links to all of them, simply 
+REM install them(or compile them), and drop the path in
+REM the correct variable. Do not include the trailing "\"
+REM **************** R1DELTA CONFIG FILE ****************
+
+SET "LOVE_PATH=C:\Users\quadruple\Documents\love-mega\megasource\build\love\Release"
+SET "7ZIP_PATH=C:\Program Files\7-Zip"
+SET "RESH_PATH=C:\Program Files (x86)\Resource Hacker"
