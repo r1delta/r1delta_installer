@@ -34,7 +34,8 @@ if exist config.cmd (
         exit /b
     )
 ) else (
-    echo config.cmd file not found.   
+    echo config.cmd file not found. 
+    exit /b  
 )
 
 echo Cleaning up folders...
