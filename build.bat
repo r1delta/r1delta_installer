@@ -49,7 +49,7 @@ echo Copying intermediate Love2D files...
 copy /V /Y "%LOVE_PATH%\love.exe" /B "intermediate\" > nul
 copy /V /Y "%LOVE_PATH%\love.dll" /B "intermediate\" > nul
 copy /V /Y "%LOVE_PATH%\lua51.dll" /B "intermediate\" > nul   
-rem copy /V /Y "%LOVE_PATH%\OpenAL32.dll" /B "intermediate\" > nul   
+copy /V /Y "%LOVE_PATH%\OpenAL32.dll" /B "intermediate\" > nul   
 copy /V /Y "%LOVE_PATH%\SDL2.dll" /B "intermediate\" > nul   
 
 cd source
@@ -65,8 +65,7 @@ copy /b love.exe + build.love r1delta_installer.exe >nul
 ResourceHacker.exe -open r1delta_installer.exe -save r1delta_installer.exe -action addoverwrite -res ..\r1delta_installer_patch.res -mask ,,, >nul
  
 echo Building 7-Zip archive...
-rem 7z.exe a -y r1delta_installer.7z r1delta_installer.exe love.dll lua51.dll OpenAL32.dll SDL2.dll >nul
-7z.exe a -y r1delta_installer.7z r1delta_installer.exe love.dll lua51.dll SDL2.dll >nul
+7z.exe a -y r1delta_installer.7z r1delta_installer.exe love.dll lua51.dll OpenAL32.dll SDL2.dll >nul
 
 echo Building 7-Zip SFX archive...
 copy /V /Y "!7ZIP_PATH!\7zS2.sfx" /B "7zS2.sfx" >nul
