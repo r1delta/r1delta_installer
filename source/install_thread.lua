@@ -214,7 +214,7 @@ end
 --  Download R1Delta resources
 --
 local function donwload_resources()
-    local code, body = https.request("https://github.com/r1delta/r1delta/releases/latest/download/r1delta_full-build.zip")
+    local code, body = https.request("https://github.com/r1delta/r1delta/releases/latest/download/r1delta.zip")
     if(code ~= 200) then throw_error(string.format("Failed to download R1Delta resources. %s", code)) end
     return body
 end
