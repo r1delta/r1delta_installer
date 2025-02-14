@@ -275,27 +275,65 @@ local function save_change_list()
     end
 end
 
+-- 
+-- Check for replacement, and show deprecation messages.
+-- 
+local function deprecation_message()
+    local deprecated_message = "The R1Delta installer has been deprecated and will soon be discontinued. \
+While you can continue using this version for now, please note that support will no longer be available. \
+We're excited to announce that an upgraded installer, packed with new features will be available soon!"
 
-check_titanfall_open()
+    local replaced_message = "The R1Delta installer has been discontinued and superseded by an updated version. \
+Please download the latest version from "
 
-set_title_subtitle("R1Delta installer", "Finding Titanfall installation folder...")
-install_dir = get_titanfall_dir()
+    local replaced = false 
+    local new_link = ""
 
-check_advanced_settings()
+    local code, body = https.request("https://gist.githubusercontent.com/quad-damage/caf4dbbf4e048419a522c97f84c9031f/raw/r1delta_installer.ini")
+    if(code ~= 200) then
+        replaced, new_link = false, ""
+    else
+        _replaced, new_link = body:match("replaced=(%a+)%s+new_link=(.+)")
+        replaced = _replaced == "true" and true or false
 
-set_title_subtitle("R1Delta installer", "Checking for older R1Dleta installations")
-check_for_former_r1delta_install()
+    end
+    
+    replaced_message = replaced_message .. new_link
 
--- set_title_subtitle("R1Delta installer", "Checking for modded Titanfall installation...")
-check_for_modded_install()
+    love.window.showMessageBox("R1Delta Installer", replaced and replaced_message or deprecated_message, replaced and "error" or "warning")
+    return replaced
+end
 
-set_title_subtitle("R1Delta installer", "Download R1Delta resources...")
-r1delta_zip_content = donwload_resources()
-r1delta_zip = love.data.newByteData(r1delta_zip_content, 0, #r1delta_zip_content)
 
-set_title_subtitle("R1Delta installer", "Extracting R1Delta resources...")
-extract_files()
+local function main()
+    if(not deprecation_message()) then
+        check_titanfall_open()
 
-set_animation("IDLE")
-set_title_subtitle("Installation complete", "You may now close this window.")
-save_change_list()
+        set_title_subtitle("R1Delta installer", "Finding Titanfall installation folder...")
+        install_dir = get_titanfall_dir()
+
+        check_advanced_settings()
+
+        set_title_subtitle("R1Delta installer", "Checking for older R1Dleta installations")
+        check_for_former_r1delta_install()
+
+        -- set_title_subtitle("R1Delta installer", "Checking for modded Titanfall installation...")
+        check_for_modded_install()
+
+        set_title_subtitle("R1Delta installer", "Downloading R1Delta resources...")
+        r1delta_zip_content = donwload_resources()
+        r1delta_zip = love.data.newByteData(r1delta_zip_content, 0, #r1delta_zip_content)
+
+        set_title_subtitle("R1Delta installer", "Extracting R1Delta resources...")
+        extract_files()
+
+        set_animation("IDLE")
+        set_title_subtitle("Installation complete", "You may now close this window.")
+        save_change_list()
+    else
+        set_animation("IDLE")
+        set_title_subtitle("R1Delta installer", "Please download the new version.")
+    end
+end
+
+main()
